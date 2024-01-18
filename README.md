@@ -19,4 +19,4 @@ Thanh toán bằng Momo </br>
 Đăng nhập</br>
 Xem thông tin đơn hàng</br>
 Thêm sản phẩm</br>
-Cập nhật sản phẩ
+Cập nhật sản phẩm
