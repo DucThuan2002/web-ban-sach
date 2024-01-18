@@ -1,9 +1,9 @@
 
-<h3>I. Khái quát công cụ, ngôn ngữ sử dụng</h3>>
+<h3>I. Khái quát công cụ, ngôn ngữ sử dụng</h3>
 
-Ngôn ngữ lập trình: PHP
-Framework: Laravel
-Model: MVC
+Ngôn ngữ lập trình: PHP</br>
+Framework: Laravel</br>
+Model: MVC</br>
 
 <h3>II. Danh sách Actors</h3>
 
