@@ -9,6 +9,7 @@ Model: MVC</br>
 <h4>1. Khách hàng</h4>
 Đăng nhập (Google)</br>
 Đăng kí </br>
+Phân quyền </br>
 Đặt lại mật khẩu </br>
 Xem thông tin sản phẩm </br>
 Xem danh mục sản phẩm </br>
