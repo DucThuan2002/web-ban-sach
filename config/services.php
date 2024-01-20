@@ -39,9 +39,9 @@ return [
     ],
 
     'google' => [
-        'client_id' => '890964923097-34tfdcbpsk8hg2gm5ehjmj6ffh3mvvj3.apps.googleusercontent.com',
-        'client_secret' => 'Sbf3gh_pVHDDq89f5jR_w1Ep',
-        'redirect' => 'http://localhost/tutorial_youtube/shopbanhanglaravel/google/callback',
+        'client_id' => '232004036280-8v0rgkdel1p3a80dieut2o0h2laa4dsr.apps.googleusercontent.com',
+        'client_secret' => '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',
+        'redirect' => 'http://localhost/shop/admin/user/login/google/callback',
     ],
     
     

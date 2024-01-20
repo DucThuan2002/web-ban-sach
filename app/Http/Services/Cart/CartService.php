@@ -10,7 +10,6 @@ use App\Models\Customer;
 use App\Helpers\Helper;
 use App\Models\Cart;
 use Illuminate\Support\Facades\DB;
-use App\Jobs\SendMail;
 use Illuminate\Support\Facades\Redirect;
 
 Class CartService
@@ -102,10 +101,6 @@ Class CartService
             DB::commit();
             session()->flash('success', 'Đặt hàng thành công');
             session()->forget('carts');
-
-            #QUEUE
-            SendMail::dispatch($request->input('email'), $carts)
-                ->delay(now()->addMinute(1));
         } catch (\Throwable $th) {
             DB::rollBack();
             session()->flash('error', 'Đặt hàng không thành công');

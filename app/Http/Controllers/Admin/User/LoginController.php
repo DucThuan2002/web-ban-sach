@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\User\redirect;
 use App\Models\Social;
 use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
 
 
 class LoginController extends Controller
@@ -36,16 +37,18 @@ class LoginController extends Controller
 
     public function login_google()
     {
-        return Socialite::driver('google')->redirect();
+       return Socialite::driver('google')->redirect();
     }
 
     public function callback_google()
     {
         $user = Socialite::driver('google')->stateless()->user();
+        
         $authUser = $this->findOrCreateUser($user, 'google');
         
-        session()->put('admin_login', $authUser->login->admin_name);
-        session()->put('admin_id', $authUser->login->admin_id);
+        if (!Auth::attempt($authUser)) {
+            session()->flash('error', 'Tài khoản email của quý khách đã được đăng ký rồi');   
+        }
 
         return redirect()->route('admin');
     }
@@ -55,7 +58,12 @@ public function findOrCreateUser($user, $provider)
         $authUser = Social::where('provider_user_id', $user->id)->first();
 
         if ($authUser) {
-            return $authUser;
+            $email = $authUser->login->email;
+            $user = [
+                'email' => $email,
+                'password' => 1
+            ];
+            return $user;
         }
 
         $loginUser = User::where('email', $user->email)->first();
@@ -64,7 +72,7 @@ public function findOrCreateUser($user, $provider)
             $loginUser = User::create([
                 'name' => $user->name,
                 'email' => $user->email,
-                'password' => '', // You might want to handle password differently
+                'password' => '1', // You might want to handle password differently
                 // 'admin_phone' => '',
                 // 'admin_status' => 1,
             ]);
@@ -75,10 +83,21 @@ public function findOrCreateUser($user, $provider)
             'provider' => strtoupper($provider),
         ]);
 
-        $socialUser->login()->associate($loginUser);
+        $email = $authUser->login->email;
+        $password = $authUser->login->password;
+        $user = [
+            'email' => $email,
+            'password' => 1
+        ];
         $socialUser->save();
 
-        return $socialUser;
+        return $user;
+    }
+
+    public function getLogout()
+    {
+        Auth::logout();
+        return redirect()->route('admin');
     }
 
 }

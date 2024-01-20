@@ -12,6 +12,8 @@ use App\Http\Controllers\MenuCustomerController;
 use App\Http\Controllers\ProductCustomerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Admin\CartAdminController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\User\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +28,17 @@ use App\Http\Controllers\Admin\CartAdminController;
 // <---------------------------------Admin------------------------->
 Route::get('/admin/user/login', [LoginController::class, 'index'])->name("login");
 Route::post('/admin/users/login/store', [LoginController::class, 'store']);
+
 // login google
 Route::get('/login-google', [LoginController::class, 'login_google']);
-Route::get('/google/callback', [LoginController::class, 'callback_google']);
+Route::get('/admin/user/login/google/callback', [LoginController::class, 'callback_google']);
 
+// logout
+Route::get('/logout', [LoginController::class, 'getLogout']);
+
+// Authentication roles
+Route::get('/admin/register-auth', [AuthController::class, 'register_auth']);
+Route::post('/admin/register', [AuthController::class, 'register']);
 
 // đã đăng nhập
 Route::group(['middleware' => 'auth'], function() {
@@ -73,6 +82,10 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('customers', [CartAdminController::class, 'index']);
         Route::get('customer/view/{customer}', [CartAdminController::class, 'show']);
 
+        // User authentication
+        Route::get('users', [UserController::class, 'index']);
+        Route::post('assign-roles', [UserController::class, 'assign_roles']);
+        
     });
 
 });
